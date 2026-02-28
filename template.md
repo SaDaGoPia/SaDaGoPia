@@ -1,4 +1,8 @@
-# `{{USERNAME}}` · terminal profile
+# `{{USERNAME}}`
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Consolas&weight=500&size=24&duration=1800&pause=700&color=7CFC00&center=true&vCenter=true&width=700&height=42&lines=terminal+profile;linux+terminal+profile;dynamic+terminal+profile" alt="Terminal profile typing animation" />
+</p>
 
 <p align="center">
 	<img src="./assets/terminal.svg" alt="Linux terminal dashboard" width="100%" />
