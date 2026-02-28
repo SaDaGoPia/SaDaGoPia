@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" font-family="ConsolasFallback,Consolas,monospace" width="1200px" height="760px" font-size="16px">
+<style>
+@font-face {
+src: local('Consolas'), local('Consolas Bold');
+font-family: 'ConsolasFallback';
+font-display: swap;
+-webkit-size-adjust: 109%;
+size-adjust: 109%;
+}
+.key {fill: #AE75DA;}
+.value {fill: #a5d6ff;}
+.addColor {fill: #3fb950;}
+.delColor {fill: #f85149;}
+.cc {fill: #616e7f;}
+.base {fill: #c9d1d9;}
+.term {fill: #7CFC00;}
+text, tspan {white-space: pre;}
+a:hover .value {fill: #58a6ff; text-decoration: underline;}
+</style>
+
+<rect width="1200px" height="760px" fill="#161b22" rx="15"/>
+<rect x="26" y="26" width="1148" height="708" fill="#0d1117" rx="12" stroke="#30363d"/>
+
+<circle cx="60" cy="50" r="7" fill="#ff5f56"/>
+<circle cx="84" cy="50" r="7" fill="#ffbd2e"/>
+<circle cx="108" cy="50" r="7" fill="#27c93f"/>
+
+<text x="145" y="56" class="cc">terminal://profile/{{USERNAME}}</text>
+
+<line x1="580" y1="85" x2="580" y2="705" stroke="#30363d"/>
+
+<text x="50" y="110" class="base">
+  <tspan x="50" y="110" class="term">$ </tspan><tspan class="key">whoami</tspan>
+  <tspan x="50" y="138" class="value">{{USERNAME}}</tspan>
+
+  <tspan x="50" y="180" class="term">$ </tspan><tspan class="key">boot --check</tspan>
+  <tspan x="50" y="208" class="cc">status</tspan><tspan>: </tspan><tspan class="addColor">online</tspan>
+  <tspan x="50" y="236" class="cc">last_sync</tspan><tspan>: </tspan><tspan class="value">{{DATE}}</tspan>
+
+  <tspan x="50" y="278" class="term">$ </tspan><tspan class="key">cat focus.txt</tspan>
+  <tspan x="50" y="306" class="value">full-stack + cloud + mobile</tspan>
+
+  <tspan x="50" y="348" class="term">$ </tspan><tspan class="key">ls contact</tspan>
+  <tspan x="50" y="376" class="cc">linkedin</tspan><tspan>: </tspan><tspan class="value">linkedin.com/in/your-linkedin-handle</tspan>
+  <tspan x="50" y="404" class="cc">instagram</tspan><tspan>: </tspan><tspan class="value">instagram.com/your_instagram</tspan>
+  <tspan x="50" y="432" class="cc">gmail</tspan><tspan>: </tspan><tspan class="value">your.email@gmail.com</tspan>
+
+  <tspan x="50" y="474" class="term">$ </tspan><tspan class="key">tail -f session.log</tspan>
+
+  <tspan x="50" y="502" class="value" opacity="0">Loading modules<set attributeName="opacity" to="1" begin="0.4s" fill="freeze"/></tspan>
+  <tspan x="50" y="530" class="value" opacity="0">Syncing profile metadata<set attributeName="opacity" to="1" begin="1.3s" fill="freeze"/></tspan>
+  <tspan x="50" y="558" class="value" opacity="0">Rendering README artifacts<set attributeName="opacity" to="1" begin="2.2s" fill="freeze"/></tspan>
+  <tspan x="50" y="586" class="addColor" opacity="0">Done.<set attributeName="opacity" to="1" begin="3.0s" fill="freeze"/></tspan>
+
+  <tspan x="50" y="628" class="term">$ </tspan><tspan class="value">_</tspan>
+</text>
+
+<rect x="69" y="615" width="10" height="18" fill="#7CFC00">
+  <animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite"/>
+</rect>
+
+<text x="610" y="110" class="base">
+  <tspan x="610" y="110">@{{USERNAME}}</tspan> <tspan class="cc">————————————————————————————————————</tspan>
+
+  <tspan x="610" y="145">- </tspan><tspan class="key">GitHub Stats</tspan> <tspan class="cc">——————————————————————————————</tspan>
+  <tspan x="610" y="175" class="cc">. </tspan><tspan class="key">Repos</tspan><tspan class="cc"> ................. </tspan><tspan class="value">{{REPOS}}</tspan>
+  <tspan x="610" y="203" class="cc">. </tspan><tspan class="key">Stars</tspan><tspan class="cc"> ................. </tspan><tspan class="value">{{STARS}}</tspan>
+  <tspan x="610" y="231" class="cc">. </tspan><tspan class="key">Commits</tspan><tspan class="cc"> ............... </tspan><tspan class="value">{{COMMITS}}</tspan>
+  <tspan x="610" y="259" class="cc">. </tspan><tspan class="key">Followers</tspan><tspan class="cc"> ............. </tspan><tspan class="value">{{FOLLOWERS}}</tspan>
+
+  <tspan x="610" y="305">- </tspan><tspan class="key">Now Building</tspan> <tspan class="cc">————————————————————————————</tspan>
+  <tspan x="610" y="333" class="cc">. </tspan><tspan class="value">Readable interfaces</tspan>
+  <tspan x="610" y="361" class="cc">. </tspan><tspan class="value">Automation workflows</tspan>
+  <tspan x="610" y="389" class="cc">. </tspan><tspan class="value">Cloud-ready backends</tspan>
+
+  <tspan x="610" y="435">- </tspan><tspan class="key">Core Stack</tspan> <tspan class="cc">——————————————————————————————</tspan>
+  <tspan x="610" y="463" class="cc">. </tspan><tspan class="value">Python • React • Next.js • Flutter</tspan>
+  <tspan x="610" y="491" class="cc">. </tspan><tspan class="value">PostgreSQL • MongoDB • Docker</tspan>
+  <tspan x="610" y="519" class="cc">. </tspan><tspan class="value">AWS • Firebase • Linux</tspan>
+
+  <tspan x="610" y="565">- </tspan><tspan class="key">Quick Links</tspan> <tspan class="cc">—————————————————————————————</tspan>
+</text>
+
+<a xlink:href="https://github.com/{{USERNAME}}" target="_blank">
+  <text x="610" y="593"><tspan class="cc">. </tspan><tspan class="key">GitHub</tspan><tspan class="cc"> ..................... </tspan><tspan class="value">github.com/{{USERNAME}}</tspan></text>
+</a>
+<a xlink:href="https://linkedin.com/in/your-linkedin-handle" target="_blank">
+  <text x="610" y="621"><tspan class="cc">. </tspan><tspan class="key">LinkedIn</tspan><tspan class="cc"> ................... </tspan><tspan class="value">/in/your-linkedin-handle</tspan></text>
+</a>
+<a xlink:href="https://instagram.com/your_instagram" target="_blank">
+  <text x="610" y="649"><tspan class="cc">. </tspan><tspan class="key">Instagram</tspan><tspan class="cc"> .................. </tspan><tspan class="value">@your_instagram</tspan></text>
+</a>
+
+<text x="610" y="690" class="cc">———————————————————————————————————————————————————————</text>
+</svg>

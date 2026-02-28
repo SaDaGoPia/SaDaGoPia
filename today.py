@@ -10,7 +10,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 TEMPLATE_PATH = ROOT / "template.md"
+SVG_TEMPLATE_PATH = ROOT / "terminal_template.svg"
 OUTPUT_PATH = ROOT / "README.md"
+SVG_OUTPUT_PATH = ROOT / "assets" / "terminal.svg"
 
 
 def github_get(url: str, token: str | None = None, accept: str = "application/vnd.github+json") -> dict:
@@ -104,8 +106,11 @@ def main() -> None:
 
     if not TEMPLATE_PATH.exists():
         raise FileNotFoundError(f"Template not found: {TEMPLATE_PATH}")
+    if not SVG_TEMPLATE_PATH.exists():
+        raise FileNotFoundError(f"SVG template not found: {SVG_TEMPLATE_PATH}")
 
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
+    svg_template = SVG_TEMPLATE_PATH.read_text(encoding="utf-8")
 
     try:
         stats = get_user_stats(username, token)
@@ -113,10 +118,14 @@ def main() -> None:
         body = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"GitHub API error ({exc.code}): {body}") from exc
 
-    rendered = build_readme(template, username, stats)
-    OUTPUT_PATH.write_text(rendered, encoding="utf-8")
+    rendered_readme = build_readme(template, username, stats)
+    rendered_svg = build_readme(svg_template, username, stats)
 
-    print("README.md updated successfully")
+    OUTPUT_PATH.write_text(rendered_readme, encoding="utf-8")
+    SVG_OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    SVG_OUTPUT_PATH.write_text(rendered_svg, encoding="utf-8")
+
+    print("README.md and assets/terminal.svg updated successfully")
 
 
 if __name__ == "__main__":
