@@ -12,16 +12,16 @@ $ whoami
 SaDaGoPia
 
 $ date -u
-2026-02-28 04:11 UTC
+2026-02-28 04:16 UTC
 ```
 
 ## Contact
 
 ```bash
 $ links
-linkedin  -> https://linkedin.com/in/your-linkedin-handle
-instagram -> https://instagram.com/your_instagram
-gmail     -> mailto:your.email@gmail.com
+linkedin  -> https://www.linkedin.com/in/samuel-gomez-piamba/
+instagram -> https://www.instagram.com/sd_gomezp
+gmail     -> mailto:sgdotdev@gmail.com
 ```
 
 ## About
@@ -31,13 +31,10 @@ $ cat about.txt
 - Final-year Software Development Technology student.
 - International exchange scholar at TAMK (Finland).
 - Focused on full-stack, cloud architecture, and cross-platform apps.
-- Experience delivering IoT and agricultural automation R&D solutions.
+- Driven by exellence and relentless obsession.
 ```
 
 ## Tech Stack
-
-<h3 align="center">Modern Tech Stack</h3>
-<p align="center"><em>click any badge to open official documentation</em></p>
 
 <p align="center">
 	<a href="https://docs.python.org/3/"><img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/></a>
@@ -58,13 +55,6 @@ $ cat about.txt
 	<a href="https://docs.oracle.com/en/java/"><img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java"/></a>
 	<a href="https://en.cppreference.com/w/"><img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=cplusplus&logoColor=white" alt="C++"/></a>
 </p>
-
-## Dynamic Stats
-
-```bash
-$ gh profile stats
-repos=9 | stars=4 | commits=122 | followers=1
-```
 
 ---
 
