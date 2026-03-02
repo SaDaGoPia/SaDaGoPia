@@ -36,7 +36,7 @@ a:hover .value {fill: #58a6ff; text-decoration: underline;}
 
   <tspan x="50" y="180" class="term">$ </tspan><tspan class="key">boot --check</tspan>
   <tspan x="50" y="208" class="cc">status</tspan><tspan>: </tspan><tspan class="addColor">online</tspan>
-  <tspan x="50" y="236" class="cc">last_sync</tspan><tspan>: </tspan><tspan class="value">2026-03-01 02:02 UTC</tspan>
+  <tspan x="50" y="236" class="cc">last_sync</tspan><tspan>: </tspan><tspan class="value">2026-03-02 01:53 UTC</tspan>
 
   <tspan x="50" y="278" class="term">$ </tspan><tspan class="key">cat focus.txt</tspan>
   <tspan x="50" y="306" class="value">full-stack + cloud + mobile</tspan>
