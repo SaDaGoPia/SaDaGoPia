@@ -1,4 +1,4 @@
-# `SaDaGoPia` · Who am I?
+# `SaDaGoPia` · terminal profile
 
 <p align="center">
 	<img src="./assets/terminal.svg" alt="Linux terminal dashboard" width="100%" />
@@ -12,7 +12,7 @@ $ whoami
 SaDaGoPia
 
 $ date -u
-2026-03-14 01:49 UTC
+2026-03-14 12:35 UTC
 ```
 
 ## Contact
