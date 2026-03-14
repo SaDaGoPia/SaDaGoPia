@@ -3,7 +3,7 @@ name: Update Profile README
 on:
   push:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 * * * *"
 
 permissions:
   contents: write

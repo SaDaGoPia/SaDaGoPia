@@ -42,9 +42,9 @@ a:hover .value {fill: #58a6ff; text-decoration: underline;}
   <tspan x="50" y="306" class="value">full-stack + cloud + mobile</tspan>
 
   <tspan x="50" y="348" class="term">$ </tspan><tspan class="key">ls contact</tspan>
-  <tspan x="50" y="376" class="cc">linkedin</tspan><tspan>: </tspan><tspan class="value">linkedin.com/in/your-linkedin-handle</tspan>
-  <tspan x="50" y="404" class="cc">instagram</tspan><tspan>: </tspan><tspan class="value">instagram.com/your_instagram</tspan>
-  <tspan x="50" y="432" class="cc">gmail</tspan><tspan>: </tspan><tspan class="value">your.email@gmail.com</tspan>
+  <tspan x="50" y="376" class="cc">linkedin</tspan><tspan>: </tspan><tspan class="value">linkedin.com/in/samuel-gomez-piamba/</tspan>
+  <tspan x="50" y="404" class="cc">instagram</tspan><tspan>: </tspan><tspan class="value">@sd_gomezp</tspan>
+  <tspan x="50" y="432" class="cc">gmail</tspan><tspan>: </tspan><tspan class="value">sgdotdev@gmail.com</tspan>
 
   <tspan x="50" y="474" class="term">$ </tspan><tspan class="key">tail -f session.log</tspan>
 
@@ -85,11 +85,11 @@ a:hover .value {fill: #58a6ff; text-decoration: underline;}
 <a xlink:href="https://github.com/{{USERNAME}}" target="_blank">
   <text x="610" y="593"><tspan class="cc">. </tspan><tspan class="key">GitHub</tspan><tspan class="cc"> ..................... </tspan><tspan class="value">github.com/{{USERNAME}}</tspan></text>
 </a>
-<a xlink:href="https://linkedin.com/in/your-linkedin-handle" target="_blank">
-  <text x="610" y="621"><tspan class="cc">. </tspan><tspan class="key">LinkedIn</tspan><tspan class="cc"> ................... </tspan><tspan class="value">/in/your-linkedin-handle</tspan></text>
+<a xlink:href="https://www.linkedin.com/in/samuel-gomez-piamba/" target="_blank">
+  <text x="610" y="621"><tspan class="cc">. </tspan><tspan class="key">LinkedIn</tspan><tspan class="cc"> ................... </tspan><tspan class="value">/in/samuel-gomez-piamba</tspan></text>
 </a>
-<a xlink:href="https://instagram.com/your_instagram" target="_blank">
-  <text x="610" y="649"><tspan class="cc">. </tspan><tspan class="key">Instagram</tspan><tspan class="cc"> .................. </tspan><tspan class="value">@your_instagram</tspan></text>
+<a xlink:href="https://www.instagram.com/sd_gomezp" target="_blank">
+  <text x="610" y="649"><tspan class="cc">. </tspan><tspan class="key">Instagram</tspan><tspan class="cc"> .................. </tspan><tspan class="value">@sd_gomezp</tspan></text>
 </a>
 
 <text x="610" y="690" class="cc">———————————————————————————————————————————————————————</text>
