@@ -1,4 +1,4 @@
-# `SaDaGoPia` · terminal profile
+# `SaDaGoPia` · Who am I?
 
 <p align="center">
 	<img src="./assets/terminal.svg" alt="Linux terminal dashboard" width="100%" />
