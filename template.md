@@ -19,9 +19,9 @@ $ date -u
 
 ```bash
 $ links
-linkedin  -> https://www.linkedin.com/in/samuel-gomez-piamba/
-instagram -> https://www.instagram.com/sd_gomezp
-gmail     -> mailto:sgdotdev@gmail.com
+linkedin  -> {{LINKEDIN_URL}}
+instagram -> {{INSTAGRAM_URL}}
+gmail     -> mailto:{{EMAIL}}
 ```
 
 ## About

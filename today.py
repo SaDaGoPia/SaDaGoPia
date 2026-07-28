@@ -13,6 +13,13 @@ TEMPLATE_PATH = ROOT / "template.md"
 SVG_TEMPLATE_PATH = ROOT / "terminal_template.svg"
 OUTPUT_PATH = ROOT / "README.md"
 SVG_OUTPUT_PATH = ROOT / "assets" / "terminal.svg"
+CACHE_PATH = ROOT / ".stats_cache.json"
+
+LINKEDIN_HANDLE = "samuel-gomez-piamba"
+INSTAGRAM_HANDLE = "sd_gomezp"
+EMAIL = "sgdotdev@gmail.com"
+LINKEDIN_URL = f"https://www.linkedin.com/in/{LINKEDIN_HANDLE}/"
+INSTAGRAM_URL = f"https://www.instagram.com/{INSTAGRAM_HANDLE}"
 
 
 def github_get(url: str, token: str | None = None, accept: str = "application/vnd.github+json") -> dict:
@@ -81,14 +88,40 @@ def get_user_stats(username: str, token: str | None) -> dict[str, int]:
     }
 
 
-def build_readme(template: str, username: str, stats: dict[str, int]) -> str:
+def load_cached_stats() -> dict | None:
+    if not CACHE_PATH.exists():
+        return None
+    try:
+        return json.loads(CACHE_PATH.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def resolve_date(stats: dict[str, int]) -> str:
+    """Reuse the last recorded date when stats haven't changed, so a run with no
+    real change produces byte-identical output and the workflow doesn't commit."""
+    cached = load_cached_stats()
+    if cached and cached.get("stats") == stats:
+        return cached["date"]
+
+    date = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    CACHE_PATH.write_text(json.dumps({"date": date, "stats": stats}, indent=2) + "\n", encoding="utf-8")
+    return date
+
+
+def build_readme(template: str, username: str, stats: dict[str, int], date: str) -> str:
     replacements = {
         "{{USERNAME}}": username,
-        "{{DATE}}": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "{{DATE}}": date,
         "{{REPOS}}": f"{stats['REPOS']:,}",
         "{{STARS}}": f"{stats['STARS']:,}",
         "{{COMMITS}}": f"{stats['COMMITS']:,}",
         "{{FOLLOWERS}}": f"{stats['FOLLOWERS']:,}",
+        "{{LINKEDIN_HANDLE}}": LINKEDIN_HANDLE,
+        "{{INSTAGRAM_HANDLE}}": INSTAGRAM_HANDLE,
+        "{{LINKEDIN_URL}}": LINKEDIN_URL,
+        "{{INSTAGRAM_URL}}": INSTAGRAM_URL,
+        "{{EMAIL}}": EMAIL,
     }
 
     result = template
@@ -118,8 +151,9 @@ def main() -> None:
         body = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"GitHub API error ({exc.code}): {body}") from exc
 
-    rendered_readme = build_readme(template, username, stats)
-    rendered_svg = build_readme(svg_template, username, stats)
+    date = resolve_date(stats)
+    rendered_readme = build_readme(template, username, stats, date)
+    rendered_svg = build_readme(svg_template, username, stats, date)
 
     OUTPUT_PATH.write_text(rendered_readme, encoding="utf-8")
     SVG_OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
