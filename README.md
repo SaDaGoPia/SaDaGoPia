@@ -12,7 +12,7 @@ $ whoami
 SaDaGoPia
 
 $ date -u
-2026-08-14 20:50 UTC
+2026-08-17 01:04 UTC
 ```
 
 ## Contact
@@ -23,6 +23,12 @@ linkedin  -> https://www.linkedin.com/in/samuel-gomez-piamba/
 instagram -> https://www.instagram.com/sd_gomezp
 gmail     -> mailto:sgdotdev@gmail.com
 ```
+
+## Contributions
+
+<p align="center">
+	<img src="./assets/contribution-eye.svg" alt="Contribution graph that turns into an eye" width="100%" />
+</p>
 
 ## About
 

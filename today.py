@@ -8,11 +8,14 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+import contribution_eye
+
 ROOT = Path(__file__).resolve().parent
 TEMPLATE_PATH = ROOT / "template.md"
 SVG_TEMPLATE_PATH = ROOT / "terminal_template.svg"
 OUTPUT_PATH = ROOT / "README.md"
 SVG_OUTPUT_PATH = ROOT / "assets" / "terminal.svg"
+EYE_OUTPUT_PATH = ROOT / "assets" / "contribution-eye.svg"
 CACHE_PATH = ROOT / ".stats_cache.json"
 
 LINKEDIN_HANDLE = "samuel-gomez-piamba"
@@ -88,6 +91,71 @@ def get_user_stats(username: str, token: str | None) -> dict[str, int]:
     }
 
 
+CONTRIBUTION_CALENDAR_QUERY = """
+query($login: String!) {
+  user(login: $login) {
+    contributionsCollection {
+      contributionCalendar {
+        weeks {
+          contributionDays {
+            weekday
+            contributionCount
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+# GitHub's GraphQL `color` field returns light-theme hex codes (#ebedf0 etc.)
+# regardless of profile theme, which clash with this profile's dark terminal
+# aesthetic. Bucket on the raw count instead and map to our own dark palette.
+DARK_GREEN_LEVELS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
+
+
+def _level_color(count: int) -> str:
+    if count == 0:
+        return DARK_GREEN_LEVELS[0]
+    if count <= 2:
+        return DARK_GREEN_LEVELS[1]
+    if count <= 5:
+        return DARK_GREEN_LEVELS[2]
+    if count <= 9:
+        return DARK_GREEN_LEVELS[3]
+    return DARK_GREEN_LEVELS[4]
+
+
+def get_contribution_calendar(username: str, token: str) -> tuple[dict[str, str], int]:
+    """Fetch the real day-by-day contribution calendar. Only available via
+    GraphQL with a token that has read:user scope -- the workflow's default
+    GITHUB_TOKEN cannot make this query regardless of its permissions block."""
+    body = json.dumps({"query": CONTRIBUTION_CALENDAR_QUERY, "variables": {"login": username}}).encode("utf-8")
+    request = urllib.request.Request(
+        "https://api.github.com/graphql",
+        data=body,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+            "User-Agent": "profile-readme-updater",
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+
+    if "errors" in payload:
+        raise RuntimeError(f"GitHub GraphQL error: {payload['errors']}")
+
+    weeks = payload["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
+    calendar: dict[str, str] = {}
+    for week_idx, week in enumerate(weeks):
+        for day in week["contributionDays"]:
+            calendar[f"{week_idx}-{day['weekday']}"] = _level_color(day["contributionCount"])
+
+    return calendar, len(weeks)
+
+
 def load_cached_stats() -> dict | None:
     if not CACHE_PATH.exists():
         return None
@@ -97,15 +165,16 @@ def load_cached_stats() -> dict | None:
         return None
 
 
-def resolve_date(stats: dict[str, int]) -> str:
-    """Reuse the last recorded date when stats haven't changed, so a run with no
-    real change produces byte-identical output and the workflow doesn't commit."""
+def resolve_date(payload: dict) -> str:
+    """Reuse the last recorded date when the payload (stats + contribution
+    calendar) hasn't changed, so a run with no real change produces byte-
+    identical output and the workflow doesn't commit."""
     cached = load_cached_stats()
-    if cached and cached.get("stats") == stats:
+    if cached and cached.get("payload") == payload:
         return cached["date"]
 
     date = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    CACHE_PATH.write_text(json.dumps({"date": date, "stats": stats}, indent=2) + "\n", encoding="utf-8")
+    CACHE_PATH.write_text(json.dumps({"date": date, "payload": payload}, indent=2) + "\n", encoding="utf-8")
     return date
 
 
@@ -137,6 +206,13 @@ def main() -> None:
 
     token = os.getenv("GITHUB_TOKEN")
 
+    contrib_token = os.getenv("CONTRIB_TOKEN")
+    if not contrib_token:
+        raise RuntimeError(
+            "Missing CONTRIB_TOKEN environment variable "
+            "(needs a classic PAT with read:user scope to read the contribution calendar)."
+        )
+
     if not TEMPLATE_PATH.exists():
         raise FileNotFoundError(f"Template not found: {TEMPLATE_PATH}")
     if not SVG_TEMPLATE_PATH.exists():
@@ -147,19 +223,24 @@ def main() -> None:
 
     try:
         stats = get_user_stats(username, token)
+        calendar, weeks = get_contribution_calendar(username, contrib_token)
     except urllib.error.HTTPError as exc:
         body = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"GitHub API error ({exc.code}): {body}") from exc
 
-    date = resolve_date(stats)
+    date = resolve_date({"stats": stats, "calendar": calendar})
     rendered_readme = build_readme(template, username, stats, date)
     rendered_svg = build_readme(svg_template, username, stats, date)
+
+    calendar_grid = {tuple(int(part) for part in key.split("-")): color for key, color in calendar.items()}
+    eye_svg = contribution_eye.render_svg(calendar_grid, weeks, 7)
 
     OUTPUT_PATH.write_text(rendered_readme, encoding="utf-8")
     SVG_OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     SVG_OUTPUT_PATH.write_text(rendered_svg, encoding="utf-8")
+    EYE_OUTPUT_PATH.write_text(eye_svg, encoding="utf-8")
 
-    print("README.md and assets/terminal.svg updated successfully")
+    print("README.md, assets/terminal.svg, and assets/contribution-eye.svg updated successfully")
 
 
 if __name__ == "__main__":

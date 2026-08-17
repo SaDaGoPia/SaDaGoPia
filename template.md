@@ -24,6 +24,12 @@ instagram -> {{INSTAGRAM_URL}}
 gmail     -> mailto:{{EMAIL}}
 ```
 
+## Contributions
+
+<p align="center">
+	<img src="./assets/contribution-eye.svg" alt="Contribution graph that turns into an eye" width="100%" />
+</p>
+
 ## About
 
 ```bash
