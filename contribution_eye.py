@@ -38,23 +38,15 @@ PALETTES = {
     },
 }
 
-GAZE_SEQUENCE = [
-    (1.0, "center"), (0.4, "left"), (0.8, "left"),
-    (0.4, "center"), (0.6, "center"), (0.4, "right"),
-    (0.8, "right"), (0.4, "center"), (0.4, "center"),
-    (0.3, "up"), (0.5, "up"), (0.3, "center"), (0.3, "center"),
-]
-
 GAZE_OFFSETS = {
     "center": (0.0, 0.0),
     "left": (-3.0, 0.0),
     "right": (3.0, 0.0),
-    "up": (0.0, -0.6),
 }
 
 RESTING_HOLD_SECONDS = 10.0
-BLINK_CLOSE_SECONDS = 0.15
-BLINK_OPEN_SECONDS = 0.20
+BLINK_CLOSE_SECONDS = 0.20
+BLINK_OPEN_SECONDS = 0.25
 
 
 def _seeded(col: float, row: float, salt: float) -> float:
@@ -136,11 +128,31 @@ def _blink_color(col: int, row: int, variant: str) -> str:
 
 
 def _gaze_block(cols: int, rows: int, variant: str) -> list[tuple[float, Resolver]]:
-    block: list[tuple[float, Resolver]] = []
-    for duration, pos in GAZE_SEQUENCE:
+    """Center -> glance left -> center (via a blink, not a slide) -> glance
+    right -> center (via a blink) -> hold, before the closing blink-out.
+    Blinking on the return to center reads more like a real eye than sliding
+    the pupil straight back each time."""
+
+    def at(pos: str) -> Resolver:
         gaze = GAZE_OFFSETS[pos]
-        block.append((duration, lambda c, r, g=gaze: eye_color(c, r, cols, rows, variant, g)))
-    return block
+        return lambda c, r: eye_color(c, r, cols, rows, variant, gaze)
+
+    def blink(c: int, r: int) -> str:
+        return _blink_color(c, r, variant)
+
+    return [
+        (1.3, at("center")),
+        (0.5, at("left")),
+        (1.0, at("left")),
+        (BLINK_CLOSE_SECONDS, blink),
+        (BLINK_OPEN_SECONDS, at("center")),
+        (0.8, at("center")),
+        (0.5, at("right")),
+        (1.0, at("right")),
+        (BLINK_CLOSE_SECONDS, blink),
+        (BLINK_OPEN_SECONDS, at("center")),
+        (0.8, at("center")),
+    ]
 
 
 def build_schedule(cols: int, rows: int, real_color: Resolver) -> list[tuple[float, Resolver]]:
